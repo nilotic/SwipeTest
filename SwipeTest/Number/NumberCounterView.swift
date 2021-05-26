@@ -42,10 +42,9 @@ struct NumberCounterView: View {
                     .font(data.font)
                     .padding(.leading, 2)
                     .animation(.none)
-                    .animation(.none)
             }
         }
-        .overlay(measurementView)
+        .overlay(overlay)
         .animation(animation)
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -54,11 +53,12 @@ struct NumberCounterView: View {
         }
     }
     
-    private var measurementView: some View {
+    // MARK: Private
+    private var overlay: some View {
         Text("0")
             .font(data.font)
             .frame {
-                size = $0.size
+                size = $0.size  // Update the character size
             }
             .hidden()
     }
