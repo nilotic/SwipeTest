@@ -11,7 +11,7 @@ import SwiftUI
 struct SwipeTestApp: App {
     var body: some Scene {
         WindowGroup {
-            NumberDemo()
+            Demo()
         }
     }
 }
