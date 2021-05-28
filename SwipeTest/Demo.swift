@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct Demo: View {
+    
     // MARK: - Value
     // MARK: Private
     @State private var number = 150000.0
@@ -21,7 +22,7 @@ struct Demo: View {
     // MARK - View
     // MARK: Public
     var body: some View {
-        VStack(alignment: .center, spacing: 10) {
+        VStack(alignment: .leading, spacing: 10) {
             dollars
             separator1
 
@@ -79,24 +80,21 @@ struct Demo: View {
     }
     
     private var sliders: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 Text("Number\n\(number)")
                     .bold()
                 
                 Spacer()
                 
-//                Stepper(value: $number, in: 0...1050000, step: 1) {
-//
-//                }
+                Stepper(value: $number, in: 0...1050000, step: 0.01) {
+
+                }
             }
             .padding(EdgeInsets(top: 20, leading: 0, bottom: 30, trailing: 0))
             
-//            Slider(value: $number, in: 0...1050000, step: 0.01)
-            
-            Slider(value: $number, in: 0...10, step: 2)
-            
-            LockerSlider(value: $number, in: 0...10, step: 2)
+            LockerSlider(value: $number, in: 0...1050000, step: 0.02)
+                .padding(.bottom, 20)
         }
     }
     
