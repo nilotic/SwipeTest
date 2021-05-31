@@ -44,6 +44,7 @@ struct NumberCounterView: View {
                     .animation(.none)
             }
         }
+        .drawingGroup()
         .overlay(overlay)
         .animation(animation)
         .onAppear {
