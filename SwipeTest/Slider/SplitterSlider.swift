@@ -1,13 +1,13 @@
 // 
-//  LockerSlider.swift
+//  SplitterSlider.swift
 //
-//  Created by Den Jo on 2021/05/28.
+//  Created by Den Jo on 2021/07/22.
 //  Copyright © nilotic. All rights reserved.
 //
 
 import SwiftUI
 
-struct LockerSlider<V>: View where V: BinaryFloatingPoint, V.Stride: BinaryFloatingPoint {
+struct SplitterSlider<V>: View where V: BinaryFloatingPoint, V.Stride: BinaryFloatingPoint {
     
     // MARK: - Value
     // MARK: Private
@@ -38,19 +38,24 @@ struct LockerSlider<V>: View where V: BinaryFloatingPoint, V.Stride: BinaryFloat
             ZStack(alignment: .leading) {
                 // Track
                 RoundedRectangle(cornerRadius: length / 2)
-                    .foregroundColor(Color(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)))
+                    .foregroundColor(Color(#colorLiteral(red: 0.9045957923, green: 0.9177923799, blue: 0.9348178506, alpha: 1)))
+                    .frame(height: 7)
                 
                 // Thumb
-                Circle()
-                    .foregroundColor(.white)
-                    .frame(width: length, height: length)
-                    .offset(x: (proxy.size.width - length) * ratio)
-                    .gesture(DragGesture(minimumDistance: 0)
-                                .onChanged({ updateStatus(value: $0, proxy: proxy) })
-                                .onEnded { _ in startX = nil })
+                ZStack {
+                    Circle()
+                        .frame(width: length, height: length)
+                        .modifier(MathSymbolModifier(ratio: ratio))
+                        .offset(x: (proxy.size.width - length) * ratio)
+                        .gesture(DragGesture(minimumDistance: 0)
+                                    .onChanged({ updateStatus(value: $0, proxy: proxy) })
+                                    .onEnded { _ in startX = nil })
+                    
+                    
+                    
+                }
             }
             .frame(height: length)
-            .overlay(overlay)
             .simultaneousGesture(DragGesture(minimumDistance: 0)
                                     .onChanged({ update(value: $0, proxy: proxy) }))
             .onAppear {
@@ -60,11 +65,7 @@ struct LockerSlider<V>: View where V: BinaryFloatingPoint, V.Stride: BinaryFloat
     }
     
     // MARK: Private
-    private var overlay: some View {
-        RoundedRectangle(cornerRadius: (length + lineWidth) / 2)
-            .stroke(Color.gray, lineWidth: lineWidth)
-            .frame(height: length + lineWidth)
-    }
+    
     
     
     // MARK: - Function
@@ -113,10 +114,16 @@ struct LockerSlider<V>: View where V: BinaryFloatingPoint, V.Stride: BinaryFloat
 }
 
 #if DEBUG
-struct LockerSlider_Previews: PreviewProvider {
+struct SplitterSlider_Previews: PreviewProvider {
     
     static var previews: some View {
-        let view = LockerSlider(value: .constant(20), in: 0...10, step: 1)
+        let view = GeometryReader { proxy in
+            ZStack {
+                SplitterSlider(value: .constant(0), in: 0...10, step: 1)
+                    .frame(width: proxy.size.width - 20)
+            }
+            .frame(width: proxy.size.width)
+        }
         
         Group {
             view

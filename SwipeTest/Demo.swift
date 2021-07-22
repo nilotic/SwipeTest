@@ -13,6 +13,7 @@ struct Demo: View {
     // MARK: - Value
     // MARK: Private
     @State private var number = 150000.0
+    @State private var ratio  = 0.0
     
     private let dollar = Locale(identifier: Locale.identifier(fromComponents: [NSLocale.Key.currencyCode.rawValue : "USD"]))
     private let euro   = Locale(identifier: Locale.identifier(fromComponents: [NSLocale.Key.currencyCode.rawValue : "EUR"]))
@@ -95,6 +96,8 @@ struct Demo: View {
             
             LockerSlider(value: $number, in: 0...1050000, step: 0.02)
                 .padding(.bottom, 20)
+            
+            SplitterSlider(value: $ratio, in: 0...1, step: 0.001)
         }
     }
     
